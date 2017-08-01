@@ -1,0 +1,11 @@
+# Build from source
+
+```sh
+$ sudo make config.h clean install
+```
+
+# Build diff
+
+```sh
+$ git diff 4.6 > dmenu-config.diff
+```
