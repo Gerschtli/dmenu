@@ -3,6 +3,11 @@ dmenu - dynamic menu
 dmenu is an efficient dynamic menu for X.
 
 
+Customizations
+--------------
+Applied fuzzymatch and case insensitive patches.
+
+
 Requirements
 ------------
 In order to build dmenu you need the Xlib header files.
