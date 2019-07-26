@@ -1,0 +1,7 @@
+before_script:
+  - git diff 4.9 > travis-test.diff
+  - git remote add upstream git://git.suckless.org/dmenu
+
+script:
+  - cmp --silent travis-test.diff patch-4.9.diff || echo "Patch is not up to date!"
+  - git branch -a --merged | grep remotes/upstream/master > /dev/null 2>&1 || echo "New commits in upstream!"
