@@ -1,5 +1,4 @@
 *.o
 config.h
 dmenu
-dmenu-config.diff
 stest
