@@ -42,7 +42,7 @@ index a8fcdfe..4ab4874 100644
  In order to build dmenu you need the Xlib header files.
 diff --git c/README.local w/README.local
 new file mode 100644
-index 0000000..112cda6
+index 0000000..e5c5cd1
 --- /dev/null
 +++ w/README.local
 @@ -0,0 +1,11 @@
@@ -52,10 +52,10 @@ index 0000000..112cda6
 +$ sudo make config.h clean install
 +```
 +
-+# Build diff
++# Build patch
 +
 +```sh
-+$ git diff 4.6 > dmenu-config.diff
++$ ./create-patch.sh 4.9
 +```
 diff --git c/dmenu.c w/dmenu.c
 index 6b8f51b..42fbd30 100644
