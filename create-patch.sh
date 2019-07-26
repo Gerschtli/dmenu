@@ -3,4 +3,5 @@
 VERSION="${1}"
 FILE="${2:-patch-"${1}".diff}"
 
-git diff "${VERSION}" -- . ':!*.diff' ':!.git*' ':!.travis.yml' ':!create-patch.sh' > "${FILE}"
+git config --local diff.mnemonicprefix true
+git diff --ignore-space-at-eol "${VERSION}" --  . ':!*.diff' ':!.git*' ':!.travis.yml' ':!create-patch.sh' > "${FILE}"
