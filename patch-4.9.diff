@@ -1,14 +1,3 @@
-diff --git c/.gitignore w/.gitignore
-new file mode 100644
-index 0000000..d59f928
---- /dev/null
-+++ w/.gitignore
-@@ -0,0 +1,5 @@
-+*.o
-+config.h
-+dmenu
-+stest
-+travis-test.diff
 diff --git c/LICENSE w/LICENSE
 index 6ed8ad3..9762166 100644
 --- c/LICENSE
