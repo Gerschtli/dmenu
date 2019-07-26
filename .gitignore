@@ -2,3 +2,4 @@
 config.h
 dmenu
 stest
+travis-test.diff
