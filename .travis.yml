@@ -1,17 +1,21 @@
 language: minimal
 
+env:
+  - VERSION=4.9
+
 install:
-  - git diff 4.9 > travis-test.diff
+  - ./create-patch.sh "${VERSION}" travis-test.diff
   - git remote add upstream git://git.suckless.org/dmenu
+  - git fetch --all
 
 before_script:
-  - cmp travis-test.diff patch-4.9.diff || true
+  - cmp travis-test.diff "patch-${VERSION}.diff" || true
   - cat travis-test.diff || true
   - git branch -a --merged || true
 
 script:
   - |
-    cmp --silent travis-test.diff patch-4.9.diff || \
+    cmp --silent travis-test.diff "patch-${VERSION}.diff" || \
       { echo "Patch is not up to date!" && return 1 }
   - |
     git branch -a --merged | grep remotes/upstream/master > /dev/null 2>&1 || \
