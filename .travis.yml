@@ -4,6 +4,11 @@ install:
   - git diff 4.9 > travis-test.diff
   - git remote add upstream git://git.suckless.org/dmenu
 
+before_script:
+  - cmp travis-test.diff patch-4.9.diff || true
+  - cat travis-test.diff || true
+  - git branch -a --merged || true
+
 script:
   - |
     cmp --silent travis-test.diff patch-4.9.diff || \
