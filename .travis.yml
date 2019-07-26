@@ -8,11 +8,6 @@ install:
   - git remote add upstream git://git.suckless.org/dmenu
   - git fetch --all
 
-before_script:
-  - cmp travis-test.diff "patch-${VERSION}.diff" || true
-  - cat travis-test.diff || true
-  - git branch -a --merged || true
-
 script:
   - cmp --silent travis-test.diff "patch-${VERSION}.diff"
   - git branch -a --merged | grep remotes/upstream/master > /dev/null 2>&1
