@@ -14,9 +14,5 @@ before_script:
   - git branch -a --merged || true
 
 script:
-  - |
-    cmp --silent travis-test.diff "patch-${VERSION}.diff" || \
-      { echo "Patch is not up to date!" && exit 1 }
-  - |
-    git branch -a --merged | grep remotes/upstream/master > /dev/null 2>&1 || \
-      { echo "New commits in upstream!" && exit 1 }
+  - cmp --silent travis-test.diff "patch-${VERSION}.diff"
+  - git branch -a --merged | grep remotes/upstream/master > /dev/null 2>&1
