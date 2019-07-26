@@ -4,8 +4,8 @@
 $ sudo make config.h clean install
 ```
 
-# Build diff
+# Build patch
 
 ```sh
-$ git diff 4.6 > dmenu-config.diff
+$ ./create-patch.sh 4.9
 ```
