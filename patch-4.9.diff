@@ -257,3 +257,15 @@ index 6b8f51b..42fbd30 100644
 diff --git c/dmenu_path w/dmenu_path
 old mode 100644
 new mode 100755
+diff --git c/drw.c w/drw.c
+index 8fd1ca4..4cdbcbe 100644
+--- c/drw.c
++++ w/drw.c
+@@ -95,6 +95,7 @@ drw_free(Drw *drw)
+ {
+ 	XFreePixmap(drw->dpy, drw->drawable);
+ 	XFreeGC(drw->dpy, drw->gc);
++	drw_fontset_free(drw->fonts);
+ 	free(drw);
+ }
+ 
