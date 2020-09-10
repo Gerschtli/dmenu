@@ -16,14 +16,16 @@ index 0000000..3bb3187
 +indent_style = space
 +indent_size = 2
 diff --git c/LICENSE w/LICENSE
-index 6ed8ad3..9762166 100644
+index 6ed8ad3..3afd28e 100644
 --- c/LICENSE
 +++ w/LICENSE
-@@ -9,7 +9,7 @@ MIT/X Consortium License
+@@ -8,8 +8,8 @@ MIT/X Consortium License
+ © 2009 Markus Schnalke <meillo@marmaro.de>
  © 2009 Evan Gates <evan.gates@gmail.com>
  © 2010-2012 Connor Lane Smith <cls@lubutu.com>
- © 2014-2019 Hiltjo Posthuma <hiltjo@codemadness.org>
+-© 2014-2019 Hiltjo Posthuma <hiltjo@codemadness.org>
 -© 2015-2018 Quentin Rameau <quinq@fifth.space>
++© 2014-2020 Hiltjo Posthuma <hiltjo@codemadness.org>
 +© 2015-2019 Quentin Rameau <quinq@fifth.space>
  
  Permission is hereby granted, free of charge, to any person obtaining a
@@ -74,6 +76,17 @@ index 0000000..e5c5cd1
 +```sh
 +$ ./create-patch.sh 4.9
 +```
+diff --git c/config.mk w/config.mk
+index 0929b4a..05d5a3e 100644
+--- c/config.mk
++++ w/config.mk
+@@ -1,5 +1,5 @@
+ # dmenu version
+-VERSION = 4.9
++VERSION = 5.0
+ 
+ # paths
+ PREFIX = /usr/local
 diff --git c/dmenu.c w/dmenu.c
 index 6b8f51b..42fbd30 100644
 --- c/dmenu.c
