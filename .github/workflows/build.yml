@@ -5,8 +5,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      version: 4.9
 
     steps:
       - name: Checkout repository
@@ -15,10 +13,13 @@ jobs:
       - name: Fetch tags
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
-      - name: Create patch
-        run: ./create-patch.sh ${{env.version}}
+      - name: Create patch for 4.9
+        run: ./create-patch.sh 4.9
 
-      - name: Check patch
+      - name: Create patch for 5.0
+        run: ./create-patch.sh 5.0
+
+      - name: Check patches for changes
         run: git diff --exit-code
         id: check-patch
         continue-on-error: true
