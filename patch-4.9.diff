@@ -293,3 +293,16 @@ index 0000000..f45d8f1
 +    "config:base"
 +  ]
 +}
+diff --git c/stest.c w/stest.c
+index 7a7b0bc..e27d3a5 100644
+--- c/stest.c
++++ w/stest.c
+@@ -84,7 +84,7 @@ main(int argc, char *argv[])
+ 	if (!argc) {
+ 		/* read list from stdin */
+ 		while ((n = getline(&line, &linesiz, stdin)) > 0) {
+-			if (n && line[n - 1] == '\n')
++			if (line[n - 1] == '\n')
+ 				line[n - 1] = '\0';
+ 			test(line, line);
+ 		}
