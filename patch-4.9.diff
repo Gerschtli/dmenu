@@ -88,7 +88,7 @@ index 0929b4a..05d5a3e 100644
  # paths
  PREFIX = /usr/local
 diff --git c/dmenu.c w/dmenu.c
-index 6b8f51b..42fbd30 100644
+index 6b8f51b..b091b42 100644
 --- c/dmenu.c
 +++ w/dmenu.c
 @@ -32,6 +32,7 @@ struct item {
@@ -202,7 +202,89 @@ index 6b8f51b..42fbd30 100644
  			break;
  		case XK_u: /* delete left */
  			insert(NULL, 0 - cursor);
-@@ -492,7 +571,7 @@ insert:
+@@ -360,9 +439,11 @@ keypress(XKeyEvent *ev)
+ 			                  utf8, utf8, win, CurrentTime);
+ 			return;
+ 		case XK_Left:
++		case XK_KP_Left:
+ 			movewordedge(-1);
+ 			goto draw;
+ 		case XK_Right:
++		case XK_KP_Right:
+ 			movewordedge(+1);
+ 			goto draw;
+ 		case XK_Return:
+@@ -400,6 +481,7 @@ insert:
+ 			insert(buf, len);
+ 		break;
+ 	case XK_Delete:
++	case XK_KP_Delete:
+ 		if (text[cursor] == '\0')
+ 			return;
+ 		cursor = nextrune(+1);
+@@ -410,6 +492,7 @@ insert:
+ 		insert(NULL, nextrune(-1) - cursor);
+ 		break;
+ 	case XK_End:
++	case XK_KP_End:
+ 		if (text[cursor] != '\0') {
+ 			cursor = strlen(text);
+ 			break;
+@@ -429,6 +512,7 @@ insert:
+ 		cleanup();
+ 		exit(1);
+ 	case XK_Home:
++	case XK_KP_Home:
+ 		if (sel == matches) {
+ 			cursor = 0;
+ 			break;
+@@ -437,6 +521,7 @@ insert:
+ 		calcoffsets();
+ 		break;
+ 	case XK_Left:
++	case XK_KP_Left:
+ 		if (cursor > 0 && (!sel || !sel->left || lines > 0)) {
+ 			cursor = nextrune(-1);
+ 			break;
+@@ -445,18 +530,21 @@ insert:
+ 			return;
+ 		/* fallthrough */
+ 	case XK_Up:
++	case XK_KP_Up:
+ 		if (sel && sel->left && (sel = sel->left)->right == curr) {
+ 			curr = prev;
+ 			calcoffsets();
+ 		}
+ 		break;
+ 	case XK_Next:
++	case XK_KP_Next:
+ 		if (!next)
+ 			return;
+ 		sel = curr = next;
+ 		calcoffsets();
+ 		break;
+ 	case XK_Prior:
++	case XK_KP_Prior:
+ 		if (!prev)
+ 			return;
+ 		sel = curr = prev;
+@@ -473,6 +561,7 @@ insert:
+ 			sel->out = 1;
+ 		break;
+ 	case XK_Right:
++	case XK_KP_Right:
+ 		if (text[cursor] != '\0') {
+ 			cursor = nextrune(+1);
+ 			break;
+@@ -481,6 +570,7 @@ insert:
+ 			return;
+ 		/* fallthrough */
+ 	case XK_Down:
++	case XK_KP_Down:
+ 		if (sel && sel->right && (sel = sel->right) == next) {
+ 			curr = next;
+ 			calcoffsets();
+@@ -492,7 +582,7 @@ insert:
  		strncpy(text, sel->text, sizeof text - 1);
  		text[sizeof text - 1] = '\0';
  		cursor = strlen(text);
@@ -211,7 +293,7 @@ index 6b8f51b..42fbd30 100644
  		break;
  	}
  
-@@ -553,9 +632,14 @@ run(void)
+@@ -553,9 +643,14 @@ run(void)
  	XEvent ev;
  
  	while (!XNextEvent(dpy, &ev)) {
@@ -227,7 +309,7 @@ index 6b8f51b..42fbd30 100644
  		case Expose:
  			if (ev.xexpose.count == 0)
  				drw_map(drw, win, 0, 0, mw, mh);
-@@ -648,7 +732,7 @@ setup(void)
+@@ -648,7 +743,7 @@ setup(void)
  	}
  	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
  	inputw = MIN(inputw, mw/3);
@@ -236,7 +318,7 @@ index 6b8f51b..42fbd30 100644
  
  	/* create menu window */
  	swa.override_redirect = True;
-@@ -659,15 +743,17 @@ setup(void)
+@@ -659,15 +754,17 @@ setup(void)
  	                    CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
  	XSetClassHint(dpy, win, &ch);
  
@@ -258,7 +340,7 @@ index 6b8f51b..42fbd30 100644
  		if (XQueryTree(dpy, parentwin, &dw, &w, &dws, &du) && dws) {
  			for (i = 0; i < du && dws[i] != win; ++i)
  				XSelectInput(dpy, dws[i], FocusChangeMask);
-@@ -731,8 +817,6 @@ main(int argc, char *argv[])
+@@ -731,8 +828,6 @@ main(int argc, char *argv[])
  
  	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
  		fputs("warning: no locale support\n", stderr);
@@ -271,7 +353,7 @@ diff --git c/dmenu_path w/dmenu_path
 old mode 100644
 new mode 100755
 diff --git c/drw.c w/drw.c
-index 8fd1ca4..4cdbcbe 100644
+index 8fd1ca4..9c39086 100644
 --- c/drw.c
 +++ w/drw.c
 @@ -95,6 +95,7 @@ drw_free(Drw *drw)
@@ -282,6 +364,20 @@ index 8fd1ca4..4cdbcbe 100644
  	free(drw);
  }
  
+@@ -309,8 +310,11 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
+ 		if (utf8strlen) {
+ 			drw_font_getexts(usedfont, utf8str, utf8strlen, &ew, NULL);
+ 			/* shorten text if necessary */
+-			for (len = MIN(utf8strlen, sizeof(buf) - 1); len && ew > w; len--)
+-				drw_font_getexts(usedfont, utf8str, len, &ew, NULL);
++			if (ew > w)
++				for (ew = 0, len = 0; ew < w - lpad * 2 && len < MIN(utf8strlen, sizeof(buf) - 1); len++)
++					drw_font_getexts(usedfont, utf8str, len, &ew, NULL);
++			else
++				len = MIN(utf8strlen, sizeof(buf) - 1);
+ 
+ 			if (len) {
+ 				memcpy(buf, utf8str, len);
 diff --git c/renovate.json w/renovate.json
 new file mode 100644
 index 0000000..f45d8f1
