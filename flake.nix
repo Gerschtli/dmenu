@@ -9,7 +9,7 @@
 
       overlay = final: prev: {
         dmenu = prev.dmenu.overrideAttrs (old: {
-          version = "5.3";
+          version = "5.4";
           src = builtins.path { path = ./.; name = "dmenu"; };
         });
       };
